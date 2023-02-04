@@ -1,0 +1,102 @@
+'use strict'
+
+
+
+
+
+
+
+
+--- Version #2 ---
+
+// draft.txt contain the *current logic of the game
+// (this file dynamically changes, whenever I connect a new line between 2 dots, delete others, etc.)
+
+// A) let's make a button which by clicking it -
+// a world (grid of Cell objects) at size of 3*4 (for start) Cell(s) will be created.
+// - DOM > body > main container > world container > button
+// - click event calls a grid generator function
+// - for during a 3-rows-loop, 4-columns-loop each call - 
+// an object Cell will be made with the following properties:
+// ID (by its row and column), in that case first Cell id === 00 as [0,0], 
+// but it might also be /11/A-1/a1/a1- while "-" means "that it cannot be filled with anything"  
+// any other id which might be useful for any further calculations
+// (not a random hash number, but meaningful one.)
+// OR, that for the purpose of setting neighbors - border will also be part of the grid
+// so practically a grid of 3*4 will start in position [1,1] in the Cell objects array.
+// beside Id and neighbors, cell will be a content property: air or solid.
+// and so will get completed the first phase by creating a basic grid structure of Cells.
+
+// "air cells" remains empty initially,
+// while type of tile that which will filled the solid cells will determined randomly 
+// in the tiles generating phase, after get the checkValidity approval.
+// we'll get there...
+
+
+// for the purpose of check if the current position in the grid
+// is a valid position to create a Cell object and append as a child of the world-container.
+// every 
+
+
+// B) let's filled each Cell with Tile, according to validityCheck
+// - require a validityCheck for
+
+
+
+--- Version #1 ---
+
+ Minecraft
+ create a "living" (integrated) Grid of tiles
+ Grid will be a "master mind" object that will be fully "aware"
+ in every given time to every single change in the app
+ and constantly will update its current state
+ GRID (internal) STRUCTURE :
+ there will be a very specific and accurate purpose for every element of the grid:
+ Cell, beside column and row which will be both its unique Id and position,
+ Each Cell will have 4 neighbors, left, top, right, and bottom;
+ positionCheck() to verify that it can be legally created
+ (inside the grid frame, and other specific condition such as:
+ brown part of a tree [/race] can't be on top of the green part of tree[/leaves], etc.)
+ if Cell empty, it can be filled with content from INVENTORY
+ (obviously, if receiving a confirmation (/'true') from positionCheck())
+ if Cell occupied, with the right TOOL (a different[/additional{?}] kind of validity check)
+ - can "get emptied" and store in the INVENTORY.
+
+ Any change that the player wants to make in a Cell
+ (Either if the s/he aware of that or not)
+ Will trigger a checking if this change is even valid
+ and only then, if so, will trigger A CHANGE(/CHAIN?) REACTION -
+ that will "inform" the Grid, that will be updated accordingly
+ by chaining the information forward(/downward) to all the elements which get affected by this change
+ for the purpose of keeping a synchronized state
+
+ Grid aka Map aka World aka Screen functionality:
+ generated - "according to a given string (xxl, xl, l, m, s) filled cells with content"
+ ---- (*with a min-max range limitation) - string: xl, grid size (length) === z*y
+ ---- content === tile
+ Amongst row and column, each Cell will also have: isSolid,
+ means, either it solid by nature and "fillable", or unplayable
+ (*settings[/nature of tiles] might be changed between games by the player.)
+
+ Beside that, Cell will have a Tile (class) property ("air" if "empty")
+ so to sum up: Level will own all game elements, including:
+ World will be in the main frame and will own -
+ Cell(s), generator(size), updateState()
+ Cell will own - row, column, isSolid, Tile, updateWorldState()
+ Tile - type, match(/matchingTool), updateWorldState()
+ Tool - type, match(matchingTile), updateWorldState()
+ Inventory - setOfTiles, updateWorldState()
+
+ -=*=-*-=*=- maybe there will be another nature/rules/conditions/specifications/properties/events for elements/the game
+
+
+
+ ---------------------------------------------------------------------------
+
+
+
+
+
+ --- left outside ---  irrelevant(?)
+ Each Cell "knows" at every single moment during runtime -
+ What type of TILE it can be filled with.
