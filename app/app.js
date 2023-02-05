@@ -59,36 +59,64 @@ class Square {
         this.square.style.gridColumn = column;
     }
 }
-function generateGrid(containerWidth, containerHeight) {
-    const squareArea = 500;
-    const numSquares = (containerWidth * containerHeight) / squareArea;
-    const aspectRatio = containerWidth / containerHeight;
-    let squareWidth, squareHeight;
 
+function generateGrid(containerWidth, containerHeight) {
+    if (containerHeight > containerWidth) {
+        [containerWidth, containerHeight] = [containerHeight, containerWidth];
+    }
+    const squareArea = 1500;
+    const aspectRatio = containerWidth / containerHeight;
+    const numSquares = ((containerWidth * containerHeight) / squareArea);
+    
+    let numRows, numColumns;
     if (aspectRatio >= 1) {
-        squareWidth = containerWidth / Math.floor(Math.sqrt(numSquares));
-        squareHeight = squareWidth;
+        numRows = Math.floor(Math.sqrt(numSquares / aspectRatio));
+        numColumns = Math.ceil(numSquares / numRows);
     } else {
-        squareHeight = containerHeight / Math.floor(Math.sqrt(numSquares));
-        squareWidth = squareHeight;
-    } const grid = document.createElement('div');
+        numColumns = Math.floor(Math.sqrt(numSquares * aspectRatio));
+        numRows = Math.ceil(numSquares / numColumns);
+    } 
+    const squareWidth = containerWidth / numColumns;
+    const squareHeight = containerHeight / numRows;
+
+    const grid = document.createElement('div');
     grid.style.width = `${containerWidth}px`;
     grid.style.height = `${containerHeight}px`;
-    grid.style.display = "grid"
-    grid.style.gridTemplateRows = `repeat(${Math.floor(Math.sqrt(numSquares))}, ${squareHeight}px)`;
-    grid.style.gridTemplateColumns = `repeat(${Math.floor(Math.sqrt(numSquares))}, ${squareWidth}px)`;
-    for (let i = 0; i < Math.floor(Math.sqrt(numSquares)); i++) {
-        for (let j = 0; j < Math.floor(Math.sqrt(numSquares)); j++) {
+    grid.style.display = "grid";
+    grid.style.gridTemplateRows = `repeat(${numRows}, ${squareHeight}px)`;
+    grid.style.gridTemplateColumns = `repeat(${numColumns}, ${squareWidth}px)`;
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numColumns; j++) {
             const square = new Square(squareWidth, squareHeight, i + 1, j + 1);
-            square.square.id = `(square - ${i * Math.floor(Math.sqrt(numSquares)) + j})`;
-            square.square.style.width = `${squareWidth}px`;
+            square.square.id = `${i}-${j}`;
+            square.square.innerHTML = `${i}-${j}`;
+            square.square.style.width  = `${squareWidth}px`;
             square.square.style.height = `${squareHeight}px`;
-            grid.appendChild(square.square)
+            grid.appendChild(square.square);
         }
-    } return grid;
-} 
-const grid = generateGrid(400, 600) 
-const world = document.getElementById('world') 
-world.style.width = "400px"; 
-world.style.height = "600px"; 
+    }
+    return grid;
+}
+const grid = generateGrid(400, 800)
+const world = document.getElementById('world')
+world.style.border = "2px solid rgb(0,0,255)"
 world.appendChild(grid)
+
+class Inventory {
+    constructor() {
+        this.pools = {};
+    }
+
+    addTile(tile) {
+        if (!this.pools[tile.type]) {
+            this.pools[tile.type] = 0;
+        }
+        this.pools[tile.type]++;
+    }
+
+    removeTile(tile) {
+        if (this.pools[tile.type] && this.pools[tile.type] > 0) {
+            this.pools[tile.type]--;
+        }
+    }
+}

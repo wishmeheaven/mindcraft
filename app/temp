@@ -38,3 +38,49 @@ WHAT SHOULD BE THE CONDITIONS OF isValid()
 // (play/pause/stop)?
 */
 
+// function generateGrid(containerWidth, containerHeight) {
+//     const squareArea = 1500;
+//     const aspectRatio = containerWidth / containerHeight;
+//     const numSquares = ((containerWidth * containerHeight) / squareArea);
+//     console.log("numSquares", numSquares)
+    
+//     let squareWidth, squareHeight;
+//     squareWidth = containerWidth / (Math.floor(Math.sqrt(numSquares)));
+//     console.log(squareWidth)
+//     squareHeight = containerHeight / (Math.floor(Math.sqrt(numSquares)));
+//     console.log(squareHeight)
+
+//     if (aspectRatio >= 1) {
+//         squareWidth = (containerWidth / Math.floor(Math.sqrt(numSquares))) ;
+//         squareHeight = squareWidth;
+//     } else {
+//         squareHeight = (containerHeight / Math.floor(Math.sqrt(numSquares))) / aspectRatio;
+//         squareWidth = squareHeight;
+//     } 
+//     const grid = document.createElement('div');
+//     grid.style.width = `${containerWidth}px`;
+//     grid.style.height = `${containerHeight}px`;
+//     grid.style.display = "grid"
+//     // grid.style.border = "2px solid rgb(0,0,255)"
+//     grid.style.gridTemplateRows = `repeat(${Math.floor(Math.sqrt(numSquares))}, ${squareHeight}px)`;
+//     grid.style.gridTemplateColumns = `repeat(${Math.floor(Math.sqrt(numSquares))}, ${squareWidth}px)`;
+//     for (let i = 0; i < Math.floor(Math.sqrt(numSquares)); i++) {
+//         for (let j = 0; j < Math.floor(Math.sqrt(numSquares)); j++) {
+//             const square = new Square(squareWidth, squareHeight, i + 1, j + 1);
+//             square.square.id = `${i}-${j}`;
+//             square.square.innerHTML = `${i}-${j}`
+
+//             console.log("square.square.id", square.square.id)
+
+//             square.square.style.width  = `${squareWidth}px`;
+//             square.square.style.height = `${squareHeight}px`;
+//             grid.appendChild(square.square)
+//         }
+//     } return grid;
+// } 
+// const grid = generateGrid(400, 600) 
+// const world = document.getElementById('world') 
+// // world.style.width = "400px"; 
+// // world.style.height = "600px"; 
+// world.style.border = "2px solid rgb(0,0,255)"
+// world.appendChild(grid)
